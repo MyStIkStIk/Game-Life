@@ -39,14 +39,14 @@ namespace Game_Life
         {
             UpdateMap.SetMap(map);
         }
-        public string SendMap(int[][] map)
+        public string SendMap()
         {
             return JsonConvert.SerializeObject(UpdateMap.GetMap());
         }
     }
     class MapSize
     {
-        public int X { get; set; } = 10;
+        public int X { get; set; } = 15;
         public int Y { get; set; } = 10;
         public int Cell { get; set; } = 20;
     }

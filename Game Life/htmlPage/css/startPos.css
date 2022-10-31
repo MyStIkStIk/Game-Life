@@ -41,3 +41,13 @@ canvas{
     .tool.active{
         background: #11876a;
     }
+.tool-save {
+    position: absolute;
+    bottom: 40px;
+    padding: 0 0 0 1px;
+}
+.tool-exit {
+    position: absolute;
+    bottom: 0px;
+    padding: 0 0 0 4px;
+}
