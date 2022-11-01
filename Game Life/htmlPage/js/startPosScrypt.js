@@ -46,6 +46,7 @@ function GetImageData() {
         mas.push(row);
     }
     scryptCS.updateMap(mas);
+    if (Action == "play") {
     timerId = setInterval(function () {
         var mas = JSON.parse(scryptCS.sendMap());
         Context.fillStyle = PaintColor;
@@ -64,7 +65,28 @@ function GetImageData() {
             }
         }
     }, Timer);
-}
+    };
+    if (Action == "step") {
+        setTimeout(function () {
+            var mas = JSON.parse(scryptCS.sendMap());
+            Context.fillStyle = PaintColor;
+            for (var i = 0; i < Map.Y; i++) {
+                for (var j = 0; j < Map.X; j++) {
+                    if (mas[i][j] != 0) {
+                        Context.fillStyle = "#ee0000";
+                        Context.fillRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
+                        Context.strokeRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
+                    }
+                    if (mas[i][j] == 0) {
+                        Context.fillStyle = "#eee";
+                        Context.fillRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
+                        Context.strokeRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
+                    }
+                }
+            }
+        }, 0);
+    };
+};
 
 
 $('body').bind('mousewheel', function (e) {
@@ -81,8 +103,8 @@ $('body').bind('mousewheel', function (e) {
 $("#game-map").mousedown(function (e) {
     if (PaintAccess == true) {
         var pos = $("#game-map").offset();
-        var X = e.pageX - pos.left;
-        var Y = e.pageY - pos.top;
+        var X = (e.pageX - pos.left) / rotatescroll;
+        var Y = (e.pageY - pos.top) / rotatescroll;
 
         var XPos = Math.floor(X / Map.Cell);
         var YPos = Math.floor(Y / Map.Cell);
@@ -98,8 +120,8 @@ $("#game-map").mouseup(function (e) {
 $("#game-map").mousemove(function (e) {
     if (PaintMoveAccess == true) {
         var pos = $("#game-map").offset();
-        var X = e.pageX - pos.left;
-        var Y = e.pageY - pos.top;
+        var X = (e.pageX - pos.left) / rotatescroll;
+        var Y = (e.pageY - pos.top) / rotatescroll;
 
         var XPos = Math.floor(X / Map.Cell);
         var YPos = Math.floor(Y / Map.Cell);
@@ -163,24 +185,7 @@ $(".playbox .tool").click(function () {
         setTimeout(() => { clearInterval(timerId); });
     }
     else if (Action == "step") {
-        setTimeout(function () {
-            var mas = JSON.parse(scryptCS.sendMap());
-            Context.fillStyle = PaintColor;
-            for (var i = 0; i < Map.Y; i++) {
-                for (var j = 0; j < Map.X; j++) {
-                    if (mas[i][j] != 0) {
-                        Context.fillStyle = "#ee0000";
-                        Context.fillRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
-                        Context.strokeRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
-                    }
-                    if (mas[i][j] == 0) {
-                        Context.fillStyle = "#eee";
-                        Context.fillRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
-                        Context.strokeRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
-                    }
-                }
-            }
-        }, 0);
+        GetImageData();
     }
     else if (Action == "faster") {
         if (Timer > 100) {
