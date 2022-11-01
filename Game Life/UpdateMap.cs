@@ -73,12 +73,24 @@ namespace Game_Life
                             MakeChoise(list, i, j);
                             list.Clear();
                         }
-                        if (j == map[i].Length - 1)
+                        else if (j == map[i].Length - 1)
                         {
                             list.Add((i, j - 1, map[i][j - 1]));
                             list.Add((i + 1, j - 1, map[i + 1][j - 1]));
 
                             list.Add((i, j, map[i][j]));
+                            list.Add((i + 1, j, map[i + 1][j]));
+
+                            MakeChoise(list, i, j);
+                            list.Clear();
+                        }
+                        else
+                        {
+                            list.Add((i, j - 1, map[i][j - 1]));
+                            list.Add((i, j + 1, map[i][j + 1]));
+                            list.Add((i, j, map[i][j]));
+                            list.Add((i + 1, j - 1, map[i + 1][j - 1]));
+                            list.Add((i + 1, j + 1, map[i + 1][j + 1]));
                             list.Add((i + 1, j, map[i + 1][j]));
 
                             MakeChoise(list, i, j);
@@ -98,12 +110,25 @@ namespace Game_Life
                             MakeChoise(list, i, j);
                             list.Clear();
                         }
-                        if (i == map.Length - 1)
+                        else if (i == map.Length - 1)
                         {
                             list.Add((i - 1, j, map[i - 1][j]));
                             list.Add((i, j, map[i][j]));
 
                             list.Add((i - 1, j + 1, map[i - 1][j + 1]));
+                            list.Add((i, j + 1, map[i][j + 1]));
+
+                            MakeChoise(list, i, j);
+                            list.Clear();
+                        }
+                        else
+                        {
+                            list.Add((i - 1, j, map[i - 1][j]));
+                            list.Add((i + 1, j, map[i + 1][j]));
+                            list.Add((i, j, map[i][j]));
+
+                            list.Add((i - 1, j + 1, map[i - 1][j + 1]));
+                            list.Add((i + 1, j + 1, map[i + 1][j + 1]));
                             list.Add((i, j + 1, map[i][j + 1]));
 
                             MakeChoise(list, i, j);
@@ -124,13 +149,26 @@ namespace Game_Life
                             MakeChoise(list, i, j);
                             list.Clear();
                         }
-                        if (j == map[i].Length - 1)
+                        else if (j == map[i].Length - 1)
                         {
                             list.Add((i - 1, j - 1, map[i - 1][j - 1]));
                             list.Add((i, j - 1, map[i][j - 1]));
 
                             list.Add((i - 1, j, map[i - 1][j]));
                             list.Add((i, j, map[i][j]));
+
+                            MakeChoise(list, i, j);
+                            list.Clear();
+                        }
+                        else
+                        {
+                            list.Add((i, j - 1, map[i][j - 1]));
+                            list.Add((i, j + 1, map[i][j + 1]));
+                            list.Add((i, j, map[i][j]));
+
+                            list.Add((i - 1, j - 1, map[i - 1][j - 1]));
+                            list.Add((i - 1, j + 1, map[i - 1][j + 1]));
+                            list.Add((i - 1, j, map[i - 1][j]));
 
                             MakeChoise(list, i, j);
                             list.Clear();
@@ -149,12 +187,25 @@ namespace Game_Life
                             MakeChoise(list, i, j);
                             list.Clear();
                         }
-                        if (i == map.Length - 1)
+                        else if (i == map.Length - 1)
                         {
                             list.Add((i - 1, j - 1, map[i - 1][j - 1]));
                             list.Add((i, j - 1, map[i][j - 1]));
 
                             list.Add((i - 1, j, map[i - 1][j]));
+                            list.Add((i, j, map[i][j]));
+
+                            MakeChoise(list, i, j);
+                            list.Clear();
+                        }
+                        else
+                        {
+                            list.Add((i - 1, j - 1, map[i - 1][j - 1]));
+                            list.Add((i + 1, j - 1, map[i + 1][j - 1]));
+                            list.Add((i, j - 1, map[i][j - 1]));
+
+                            list.Add((i - 1, j, map[i - 1][j]));
+                            list.Add((i + 1, j, map[i + 1][j]));
                             list.Add((i, j, map[i][j]));
 
                             MakeChoise(list, i, j);

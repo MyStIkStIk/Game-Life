@@ -33,19 +33,26 @@ function CanvasClear() {
         }
     }
 }
-
-function GetImageData() {
+function SendImageData() {
     var CellCenter = Map.Cell / 2;
     var mas = [];
     for (var i = 0; i < Map.Y; i++) {
         var row = [];
         for (var j = 0; j < Map.X; j++) {
             var pixel = Context.getImageData(j * Map.Cell + CellCenter, i * Map.Cell + CellCenter, 1, 1).data[0];
-            row.push(pixel);
+            if (pixel != 0 && pixel < 205) {
+                row.push(1);
+            }
+            else {
+                row.push(0);
+            }
+
         }
         mas.push(row);
     }
     scryptCS.updateMap(mas);
+}
+function GetImageData() {
     if (Action == "play") {
     timerId = setInterval(function () {
         var mas = JSON.parse(scryptCS.sendMap());
@@ -53,7 +60,7 @@ function GetImageData() {
         for (var i = 0; i < Map.Y; i++) {
             for (var j = 0; j < Map.X; j++) {
                 if (mas[i][j] != 0) {
-                    Context.fillStyle = "#ee0000";
+                    Context.fillStyle = "#cc0000";
                     Context.fillRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
                     Context.strokeRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
                 }
@@ -73,7 +80,7 @@ function GetImageData() {
             for (var i = 0; i < Map.Y; i++) {
                 for (var j = 0; j < Map.X; j++) {
                     if (mas[i][j] != 0) {
-                        Context.fillStyle = "#ee0000";
+                        Context.fillStyle = "#cc0000";
                         Context.fillRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
                         Context.strokeRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
                     }
@@ -87,7 +94,9 @@ function GetImageData() {
         }, 0);
     };
 };
+function UpdateImageData() {
 
+}
 
 $('body').bind('mousewheel', function (e) {
     let min = 0.2;
@@ -145,7 +154,7 @@ $(".toolbox .tool").click(function () {
         MoveAccess.draggabilly("disable");
         $("#game-map").css("cursor", "pointer");
         PaintAccess = true;
-        PaintColor = "#ee0000";
+        PaintColor = "#cc0000";
     }
     else if (action == "clear") {
         MoveAccess.draggabilly("disable");
@@ -172,24 +181,39 @@ $(".toolbox .tool").click(function () {
 
 $(".playbox .tool").click(function () {
     $(".playbox .tool").removeClass("active");
+    $(".playbox .tool-play").removeClass("active");
     $(this).addClass("active");
 
     Action = $(this).attr("name");
     if (Action == "slower") {
         Timer += 100;
+        $(".playbox .tool").removeClass("active");
+        $(".playbox .tool-play").addClass("active");
+        Action = "play";
+        clearInterval(timerId);
+        GetImageData();
     }
     else if (Action == "play") {
+        clearInterval(timerId);
+        SendImageData();
         GetImageData();
     }
     else if (Action == "pause") {
-        setTimeout(() => { clearInterval(timerId); });
+        clearInterval(timerId);
     }
     else if (Action == "step") {
+        clearInterval(timerId);
+        SendImageData();
         GetImageData();
     }
     else if (Action == "faster") {
         if (Timer > 100) {
             Timer -= 100;
+            $(".playbox .tool").removeClass("active");
+            $(".playbox .tool-play").addClass("active");
+            Action = "play";
+            clearInterval(timerId);
+            GetImageData();
         }
     }
 })
