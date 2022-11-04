@@ -39,9 +39,21 @@ namespace Game_Life
         {
             UpdateMap.SetMap(map);
         }
-        public string SendMap()
+        public string sendMap()
         {
             return JsonConvert.SerializeObject(UpdateMap.GetMap());
+        }
+        public void saveMap(string name, string value)
+        {
+            SavesArr.AddSave(name, value);
+        }
+        public string getSaves()
+        {
+            return JsonConvert.SerializeObject(SavesArr.GetSaves());
+        }
+        public string getSave(string name)
+        {
+            return JsonConvert.SerializeObject(SavesArr.GetSave(name));
         }
     }
     class MapSize

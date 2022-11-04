@@ -41,7 +41,12 @@ canvas{
     .tool.active{
         background: #11876a;
     }
-.tool-save {
+.tool-saves {
+    position: absolute;
+    bottom: 80px;
+    padding: 0 0 0 1px;
+}
+    .tool-save {
     position: absolute;
     bottom: 40px;
     padding: 0 0 0 1px;
@@ -51,3 +56,65 @@ canvas{
     bottom: 0px;
     padding: 0 0 0 4px;
 }
+
+.back-save {
+    left: 0;
+    top: 0;
+    width: -100vw;
+    height: 100vh;
+    background: rgb(0, 0, 0, 0.0);
+    position: absolute;
+    transition: 0.5s;
+}
+
+    .back-save.active {
+        width: 100vw;
+        background: rgb(0, 0, 0, 0.9);
+    }
+    .back-save .save-block {
+        background: #2c2c2c;
+        position: fixed;
+        top: 30vh;
+        left: -100vw;
+        width: 300px;
+        display: grid;
+        padding: 20px 20px 20px 20px;
+        transition: 0.4s;
+    }
+
+    .back-save.active .save-block {
+        left: calc(50vw - 150px);
+    }
+
+    .back-save .block-close {
+        position: relative;
+    }
+
+    .back-save .button-close {
+        border-radius: 10px;
+        background: rgba(14,219,175, 0.5);
+        border: 3px solid rgba(0,0,0, 0.4);
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        height: 20px;
+        width: 20px;
+    }
+
+    .back-save .text-save {
+        width: 100%;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .back-save .save-block .input-form {
+        width: calc(100% - 25px);
+        margin: 0 25px 10px 0;
+        padding: 0 10px 0 10px;
+        outline: none;
+        height: 30px;
+    }
+
+    .back-save .save-block .button-ok {
+    }

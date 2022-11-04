@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SavesArr.cs" />
     <Compile Include="scrypts.cs" />
     <Compile Include="UpdateMap.cs" />
     <EmbeddedResource Include="Form1.resx">

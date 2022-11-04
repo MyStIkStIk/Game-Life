@@ -9,6 +9,7 @@ var Canvas;
 var Timer = 300;
 var rotatescroll = 1;
 var timerId;
+var mas;
 $(document).ready(function () {
     MoveAccess = $("#game-map").draggabilly();
     LoadCanvas();
@@ -21,21 +22,21 @@ function LoadCanvas() {
     Canvas.height = Map.Y * Map.Cell;
     Context = Canvas.getContext("2d");
     CanvasClear();
-}
+};
 
 function CanvasClear() {
     Context.clearRect(0, 0, Canvas.width, Canvas.height);
-    for (var i = 0; i < Map.X; i++) {
-        for (var j = 0; j < Map.Y; j++) {
+    for (var i = 0; i < Map.Y; i++) {
+        for (var j = 0; j < Map.X; j++) {
 
-            Context.strokeRect(i * Map.Cell, j * Map.Cell,
+            Context.strokeRect(j * Map.Cell, i * Map.Cell,
                 Map.Cell, Map.Cell);
         }
     }
-}
+};
 function SendImageData() {
     var CellCenter = Map.Cell / 2;
-    var mas = [];
+    mas = [];
     for (var i = 0; i < Map.Y; i++) {
         var row = [];
         for (var j = 0; j < Map.X; j++) {
@@ -51,11 +52,11 @@ function SendImageData() {
         mas.push(row);
     }
     scryptCS.updateMap(mas);
-}
+};
 function GetImageData() {
     if (Action == "play") {
     timerId = setInterval(function () {
-        var mas = JSON.parse(scryptCS.sendMap());
+        mas = JSON.parse(scryptCS.sendMap());
         Context.fillStyle = PaintColor;
         for (var i = 0; i < Map.Y; i++) {
             for (var j = 0; j < Map.X; j++) {
@@ -75,7 +76,7 @@ function GetImageData() {
     };
     if (Action == "step") {
         setTimeout(function () {
-            var mas = JSON.parse(scryptCS.sendMap());
+            mas = JSON.parse(scryptCS.sendMap());
             Context.fillStyle = PaintColor;
             for (var i = 0; i < Map.Y; i++) {
                 for (var j = 0; j < Map.X; j++) {
@@ -96,7 +97,26 @@ function GetImageData() {
 };
 function UpdateImageData() {
 
-}
+};
+function SaveImageData() {
+    var CellCenter = Map.Cell / 2;
+    mas = [];
+    for (var i = 0; i < Map.Y; i++) {
+        var row = [];
+        for (var j = 0; j < Map.X; j++) {
+            var pixel = Context.getImageData(j * Map.Cell + CellCenter, i * Map.Cell + CellCenter, 1, 1).data[0];
+            if (pixel != 0 && pixel < 205) {
+                row.push(1);
+            }
+            else {
+                row.push(0);
+            }
+
+        }
+        mas.push(row);
+    }
+    scryptCS.saveMap($(".input-form").val(), JSON.stringify(mas));
+};
 
 $('body').bind('mousewheel', function (e) {
     let min = 0.2;
@@ -140,6 +160,14 @@ $("#game-map").mousemove(function (e) {
     }
 });
 
+$(".button-ok").click(function () {
+    SaveImageData();
+    $(".back-save").removeClass("active");
+});
+$(".save-block .button-close").click(function () {
+    $(".back-save").removeClass("active");
+});
+
 $(".toolbox .tool").click(function () {
     $(".toolbox .tool").removeClass("active");
     $(this).addClass("active");
@@ -176,6 +204,8 @@ $(".toolbox .tool").click(function () {
         $(".toolbox .tool").removeClass("active");
         $(".toolbox .tool:first-child").addClass("active");
         PaintAccess = false;
+        $(".playbox .tool-pause").click();
+        $(".back-save").addClass("active");
     }
 });
 
