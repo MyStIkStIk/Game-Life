@@ -117,6 +117,14 @@ function SaveImageData() {
     }
     scryptCS.saveMap($(".input-form").val(), JSON.stringify(mas));
 };
+function DrawSaves() {
+    saves = JSON.parse(scryptCS.getSaves());
+    $(".saves-form").html("");
+    for (var i = 0; i < saves.length; i++) {
+        $(".saves-form").append($("<button class='my-button'><p>" + saves[i] + "</p></button>"));
+
+    }
+}
 
 $('body').bind('mousewheel', function (e) {
     let min = 0.2;
@@ -202,39 +210,37 @@ $(".toolbox .tool").click(function () {
         PaintAccess = false;
     }
     else if (action == "saves") {
+        $(".playbox .tool-pause").click();
+        $(".back-save").addClass("active2");
         MoveAccess.draggabilly("enable");
         $("#game-map").css("cursor", "move");
         $(".toolbox .tool").removeClass("active");
         $(".toolbox .tool:first-child").addClass("active");
         PaintAccess = false;
-        $(".playbox .tool-pause").click();
-        $(".back-save").addClass("active2");
         DrawSaves();
     }
     else if (action == "save") {
+        $(".playbox .tool-pause").click();
+        $(".back-save").addClass("active");
         MoveAccess.draggabilly("enable");
         $("#game-map").css("cursor", "move");
         $(".toolbox .tool").removeClass("active");
         $(".toolbox .tool:first-child").addClass("active");
         PaintAccess = false;
-        $(".playbox .tool-pause").click();
-        $(".back-save").addClass("active");
     }
 });
 
 $(".playbox .tool").click(function () {
     $(".playbox .tool").removeClass("active");
     $(".playbox .tool-play").removeClass("active");
+    $(".playbox .tool-pause").removeClass("active");
     $(this).addClass("active");
 
     Action = $(this).attr("name");
     if (Action == "slower") {
         Timer += 100;
         $(".playbox .tool").removeClass("active");
-        $(".playbox .tool-play").addClass("active");
-        Action = "play";
-        clearInterval(timerId);
-        GetImageData();
+        $(".playbox .tool-play").click();
     }
     else if (Action == "play") {
         clearInterval(timerId);
@@ -252,11 +258,7 @@ $(".playbox .tool").click(function () {
     else if (Action == "faster") {
         if (Timer > 100) {
             Timer -= 100;
-            $(".playbox .tool").removeClass("active");
-            $(".playbox .tool-play").addClass("active");
-            Action = "play";
-            clearInterval(timerId);
-            GetImageData();
+            $(".playbox .tool-play").click();
         }
     }
 })
