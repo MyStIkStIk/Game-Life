@@ -95,9 +95,6 @@ function GetImageData() {
         }, 0);
     };
 };
-function UpdateImageData() {
-
-};
 function SaveImageData() {
     var CellCenter = Map.Cell / 2;
     mas = [];
@@ -122,10 +119,32 @@ function DrawSaves() {
     $(".saves-form").html("");
     for (var i = 0; i < saves.length; i++) {
         $(".saves-form").append($("<button class='my-button'><p>" + saves[i] + "</p></button>"));
+        //$(".saves-form").append($("<button class='my-button'><p>" + saves[i] + "</p><button class='delete-save'><i class='fa fa - trash'></i></button></button>"));
 
     }
 }
-
+function GetSave(name) {
+    setTimeout(function () {
+        mas = JSON.parse(scryptCS.getSave(name));
+        scryptCS.setMapSize(mas[0].length, mas.length);
+        LoadCanvas();
+        Context.fillStyle = PaintColor;
+        for (var i = 0; i < Map.Y; i++) {
+            for (var j = 0; j < Map.X; j++) {
+                if (mas[i][j] != 0) {
+                    Context.fillStyle = "#cc0000";
+                    Context.fillRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
+                    Context.strokeRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
+                }
+                if (mas[i][j] == 0) {
+                    Context.fillStyle = "#eee";
+                    Context.fillRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
+                    Context.strokeRect(j * Map.Cell, i * Map.Cell, Map.Cell, Map.Cell);
+                }
+            }
+        }
+    }, 0);
+}
 $('body').bind('mousewheel', function (e) {
     let min = 0.2;
     let max = 5;
@@ -178,6 +197,14 @@ $(".save-block .button-close").click(function () {
 $(".saves-block .button-close").click(function () {
     $(".back-save").removeClass("active2");
 });
+$("body").on("click", ".my-button", function () {
+    GetSave($(this).text());
+    $(".back-save").removeClass("active2");
+});
+//$("body").on("click", ".delete-save", function () {
+//    GetSave($(this).parent.text());
+//    $(".back-save").removeClass("active2");
+//});
 
 $(".toolbox .tool").click(function () {
     $(".toolbox .tool").removeClass("active");

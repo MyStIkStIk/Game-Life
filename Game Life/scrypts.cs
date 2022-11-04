@@ -53,7 +53,7 @@ namespace Game_Life
         }
         public string getSave(string name)
         {
-            return JsonConvert.SerializeObject(SavesArr.GetSave(name));
+            return SavesArr.GetSave(name);
         }
     }
     class MapSize
