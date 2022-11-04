@@ -167,6 +167,9 @@ $(".button-ok").click(function () {
 $(".save-block .button-close").click(function () {
     $(".back-save").removeClass("active");
 });
+$(".saves-block .button-close").click(function () {
+    $(".back-save").removeClass("active2");
+});
 
 $(".toolbox .tool").click(function () {
     $(".toolbox .tool").removeClass("active");
@@ -197,6 +200,16 @@ $(".toolbox .tool").click(function () {
         $(".toolbox .tool").removeClass("active");
         $(".toolbox .tool:first-child").addClass("active");
         PaintAccess = false;
+    }
+    else if (action == "saves") {
+        MoveAccess.draggabilly("enable");
+        $("#game-map").css("cursor", "move");
+        $(".toolbox .tool").removeClass("active");
+        $(".toolbox .tool:first-child").addClass("active");
+        PaintAccess = false;
+        $(".playbox .tool-pause").click();
+        $(".back-save").addClass("active2");
+        DrawSaves();
     }
     else if (action == "save") {
         MoveAccess.draggabilly("enable");

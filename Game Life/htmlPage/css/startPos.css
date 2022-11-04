@@ -71,6 +71,10 @@ canvas{
         width: 100vw;
         background: rgb(0, 0, 0, 0.9);
     }
+    .back-save.active2 {
+        width: 100vw;
+        background: rgb(0, 0, 0, 0.9);
+    }
     .back-save .save-block {
         background: #2c2c2c;
         position: fixed;
@@ -117,4 +121,25 @@ canvas{
     }
 
     .back-save .save-block .button-ok {
+    }
+
+    .back-save .saves-block {
+        background: #2c2c2c;
+        position: fixed;
+        top: 30vh;
+        left: -100vw;
+        width: 300px;
+        display: grid;
+        padding: 20px 20px 20px 20px;
+        transition: 0.4s;
+    }
+
+    .back-save.active2 .saves-block {
+        left: calc(50vw - 150px);
+    }
+
+    .back-save .saves-form {
+        overflow-y: scroll;
+        padding: 5px 10px 10px 10px;
+        max-height: 50vh;
     }
