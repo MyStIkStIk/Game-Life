@@ -55,6 +55,10 @@ namespace Game_Life
         {
             return SavesArr.GetSave(name);
         }
+        public void deleteSave(string name)
+        {
+            SavesArr.Delete(name);
+        }
     }
     class MapSize
     {

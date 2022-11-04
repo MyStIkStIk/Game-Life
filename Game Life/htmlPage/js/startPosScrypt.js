@@ -118,8 +118,8 @@ function DrawSaves() {
     saves = JSON.parse(scryptCS.getSaves());
     $(".saves-form").html("");
     for (var i = 0; i < saves.length; i++) {
-        $(".saves-form").append($("<button class='my-button'><p>" + saves[i] + "</p></button>"));
-        //$(".saves-form").append($("<button class='my-button'><p>" + saves[i] + "</p><button class='delete-save'><i class='fa fa - trash'></i></button></button>"));
+        //$(".saves-form").append($("<button class='my-button'><p>" + saves[i] + "</p></button>"));
+        $(".saves-form").append($("<div class='my-button'><p>"+saves[i]+"</p> <button class='load-save'><i class='fa fa - trash'></i></button><button class='delete-save'><i class='fa fa - trash'></i></button></div>"));
 
     }
 }
@@ -197,14 +197,14 @@ $(".save-block .button-close").click(function () {
 $(".saves-block .button-close").click(function () {
     $(".back-save").removeClass("active2");
 });
-$("body").on("click", ".my-button", function () {
-    GetSave($(this).text());
+$("body").on("click", ".load-save", function () {
+    GetSave($(this).parent().text());
     $(".back-save").removeClass("active2");
 });
-//$("body").on("click", ".delete-save", function () {
-//    GetSave($(this).parent.text());
-//    $(".back-save").removeClass("active2");
-//});
+$("body").on("click", ".delete-save", function () {
+    scryptCS.deleteSave($(this).parent().text());
+    $(".back-save").removeClass("active2");
+});
 
 $(".toolbox .tool").click(function () {
     $(".toolbox .tool").removeClass("active");

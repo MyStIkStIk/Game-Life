@@ -33,9 +33,18 @@ namespace Game_Life
         }
         public static string GetSave(string name)
         {
-            FileStream stream = new FileStream(Application.StartupPath + "\\Saves\\" + name + ".txt", FileMode.Open, FileAccess.Read);
+            string namee = name.Replace(" ", "");
+            FileStream stream = new FileStream(Application.StartupPath + "\\Saves\\" + namee + ".txt", FileMode.Open, FileAccess.Read);
             StreamReader reader = new StreamReader(stream);
-            return reader.ReadToEnd();
+            string str = reader.ReadToEnd();
+            reader.Close();
+            stream.Close();
+            return str;
+        }
+        public static void Delete(string name)
+        {
+            string res = name.Replace(" ", "");
+            File.Delete(Application.StartupPath + "\\Saves\\" + res + ".txt");
         }
     }
 }
